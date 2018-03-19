@@ -72,7 +72,7 @@ namespace DataLayer
                 Conversation = "Hey there buddy, how's it going?",
             };
             const int numOfOptions = 3;
-            for (var i = 0; i <= numOfOptions; i++)
+            for (var i = 0; i < numOfOptions; i++)
             {
                 conversation.ConversationOptions.Add(ConversationOption(i));
             }

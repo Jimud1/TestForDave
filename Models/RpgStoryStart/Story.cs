@@ -5,7 +5,7 @@ namespace Models.RpgStoryStart
     /// <summary>
     /// Story start
     /// </summary>
-    public class Story
+    public class Story : IModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
