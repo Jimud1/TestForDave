@@ -9,6 +9,7 @@ namespace Models.RpgStoryStart
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public  List<Dialog> Dialogs { get; set; } = new List<Dialog>();
+        public List<ConversationModel> Conversations { get; set; } = new List<ConversationModel>();
+        public List<int> StoryLeads { get; set; } = new List<int>();
     }
 }

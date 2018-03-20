@@ -1,5 +1,6 @@
-﻿using DataLayer;
-using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using DataLayer;
 using Models.RpgStoryStart;
 
 namespace BusinessLogic.StoryService
@@ -8,9 +9,9 @@ namespace BusinessLogic.StoryService
     {
         private readonly IRespository _respository;
 
-        public StoryService(IRespository repository)
+        public StoryService()
         {
-            _respository = repository;
+            _respository = new Repository();
         }
 
         public Story Add(Story model)
@@ -33,9 +34,34 @@ namespace BusinessLogic.StoryService
             throw new System.NotImplementedException();
         }
 
+
+        private bool StoryLeadCheck(Story story, int id)
+        {
+            return story.StoryLeads.Contains(id);
+        }
+
         public Story Get(int id)
         {
-            throw new System.NotImplementedException();
+            /*This is the main function I will care about at the moment, that will deliver the given story depending on */
+            try
+            {
+                var story = _respository.StoryDummyContext.Stories(id).FirstOrDefault();
+
+                if (id > 1)
+                {
+                    //Check to see if the leading stories are valid
+                    if (StoryLeadCheck(story, id))
+                    {
+                        throw new Exception($"{id} does not belong to Story with Id {story?.Id}");
+                    }
+                }
+
+                return story;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error occured trying to get story", ex);
+            }
         }
     }
 }

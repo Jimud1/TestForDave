@@ -2,8 +2,5 @@
 
 namespace BusinessLogic.StoryService
 {
-    public interface IStoryService : IService<Story>
-    {
-        
-    }
+    public interface IStoryService : IService<Story> {}
 }

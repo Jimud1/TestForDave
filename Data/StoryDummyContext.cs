@@ -6,13 +6,15 @@ namespace DataLayer
     public class StoryDummyContext
     {
         /// <summary>
-        /// Dummy data for mock up of RPG system, would usually run off Server or maybe a file?
+        /// Dummy data for mock up of RPG stoiry system
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Story> Stories()
+        public IEnumerable<Story> Stories(int id)
         {
+            //Id is currently not used
+
             var stories = new List<Story>();
-            const int toProduce = 10;
+            const int toProduce = 1;
 
             for (var i = 0; i < toProduce; i++)
             {
@@ -23,7 +25,7 @@ namespace DataLayer
         }
 
         /// <summary>
-        /// 
+        /// Create a story
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -32,32 +34,27 @@ namespace DataLayer
             var story = new Story
             {
                 Id = id,
-                Title = $"Story title {id}"
+                Title = $"Story title {id}",
             };
-            const int dialogsToCreate = 5;
 
-            for (var i = 0; i <= dialogsToCreate; i++)
-            {
-                story.Dialogs.Add(CreateDialog(i));
-            }
+            int[] leads = {1,2,3};
 
-            return story;
-        }
+            story.StoryLeads.AddRange(leads);
 
-        private Dialog CreateDialog(int id)
-        {
-            var dialog = new Dialog
-            {
-                DialogId = id,
-            };
             const int conversationToDo = 3;
 
             for (var i = 0; i <= conversationToDo; i++)
             {
-                dialog.Conversations.Add(CreateConversation(i));
+                if(i != conversationToDo)
+                    story.Conversations.Add(CreateConversation(i));
+                else
+                {
+                    story.Conversations[i - 1].LeadingToStory = true;
+                    story.Conversations[i - 1].StoryLeadId = i;
+                }
             }
 
-            return dialog;
+            return story;
         }
 
         /// <summary>
@@ -87,7 +84,7 @@ namespace DataLayer
         /// <returns></returns>
         private string ConversationOption(int id)
         {
-            return $"Option {id}";
+            return $"{id} : Option";
         }
     }
 }

@@ -1,52 +1,83 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using DataLayer;
+using System.Xml;
 using Models.RpgStoryStart;
 
 namespace TestAppRpgStory
 {
-    class Program
+    internal class Program
     {
-        private readonly StoryDummyContext _dummyContext;
+        private static readonly StoryController StoryController;
+        private static Story _currentStory;
+        private const string NewLine = "\n\r";
 
-        public Program()
+        static Program()
         {
-            _dummyContext = new StoryDummyContext();
+            StoryController = new StoryController();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            var stories = StaticStory();
-            foreach (var story in stories)
+            GetStory(1);
+        }
+
+        private static void GetStory(int id)
+        {
+            _currentStory = StoryController.GetStory(id);
+            DisplayStory(_currentStory);
+        }
+
+        private static ConversationModel GetConversation(int id)
+        {
+            return _currentStory.Conversations.FirstOrDefault(x => x.ConversationId == id);
+        }
+
+        private static void DisplayConversation(ConversationModel conversation, bool? nextStory)
+        {
+            if (nextStory != null && (bool) nextStory)
             {
-                Console.WriteLine(story.Title + "\n\r");
-                foreach (var dialog in story.Dialogs)
+                if (conversation.StoryLeadId != null)
                 {
-                    Console.WriteLine(dialog.DialogId + "\n\r");
-                    foreach (var conversation in dialog.Conversations)
-                    {
-                        Console.WriteLine(conversation.Conversation + "\n\r");
-                        foreach (var conversationOption in conversation.ConversationOptions)
-                        {
-                            Console.WriteLine(conversationOption + "\n\r");
-                        }
-                    }
-                }
+                    GetStory((int)conversation.StoryLeadId);
+                }    
             }
-            
-            Console.ReadKey();
+
+            WriteToConsole(conversation.Conversation);
+
+            foreach (var conversationOption in conversation.ConversationOptions)
+            {
+                WriteToConsole(conversationOption);
+            }
+
+            int.TryParse(Console.ReadLine(), out var nextConversation);
+            var leadingConversation = GetConversation(nextConversation);
+            DisplayConversation(leadingConversation, conversation?.LeadingToStory);
         }
 
-        private static IEnumerable<Story> StaticStory()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="story"></param>
+        private static void DisplayStory(Story story)
         {
-            var program = new Program();
-            return program.StoryToTell();
+            //Id is currently not in use as dummy context but you get the jist
+            //This function should change depending on your view
+            WriteToConsole(story.Title);
+            var conversation = story.Conversations.FirstOrDefault();
+            DisplayConversation(conversation, conversation?.LeadingToStory);
         }
 
-        public List<Story> StoryToTell()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        private static void WriteToConsole(string text)
         {
-            return _dummyContext.Stories().ToList();
+            Console.WriteLine(text + NewLine);
         }
     }
 }
