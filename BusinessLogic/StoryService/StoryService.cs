@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using DataLayer;
 using Models.RpgStoryStart;
 
@@ -14,7 +13,11 @@ namespace BusinessLogic.StoryService
             _respository = new Repository();
         }
 
-        public Story Add(Story model)
+        #region Basic CRUD - Not needed atm
+
+        public IRespository Respository;
+
+        public StoryModel Add(StoryModel model)
         {
             throw new System.NotImplementedException();
         }
@@ -24,44 +27,46 @@ namespace BusinessLogic.StoryService
             throw new System.NotImplementedException();
         }
 
-        public Story Update(int id, Story model)
+        public StoryModel Update(int id, StoryModel model)
         {
             throw new System.NotImplementedException();
         }
 
-        public Story Get()
+        public StoryModel Get()
         {
             throw new System.NotImplementedException();
         }
+        #endregion
 
-
-        private bool StoryLeadCheck(Story story, int id)
+        private StoryEntity ModelToEntity(StoryModel model)
         {
-            return story.StoryLeads.Contains(id);
+            throw new NotImplementedException();
         }
 
-        public Story Get(int id)
+
+        public StoryModel Get(int id)
         {
             /*This is the main function I will care about at the moment, that will deliver the given story depending on */
             try
             {
-                var story = _respository.StoryDummyContext.Stories(id).FirstOrDefault();
+                var story = _respository.StoryContext.Story.Find(id);
 
-                if (id > 1)
-                {
-                    //Check to see if the leading stories are valid
-                    if (StoryLeadCheck(story, id))
-                    {
-                        throw new Exception($"{id} does not belong to Story with Id {story?.Id}");
-                    }
-                }
-
-                return story;
+                return EntityToModel(story);
             }
             catch (Exception ex)
             {
                 throw new Exception("Error occured trying to get story", ex);
             }
+        }
+
+        private StoryModel EntityToModel(StoryEntity entity)
+        {
+            var model = new StoryModel
+            {
+                StoryId = entity.StoryId,
+                Title = entity.StoryTitle
+            };
+            return model;
         }
     }
 }

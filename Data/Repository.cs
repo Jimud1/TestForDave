@@ -2,8 +2,8 @@
 {
     public class Repository : IRespository
     {
-        private StoryDummyContext _storyDummyContext;
+        private StoryContext _storyContext;
 
-        public StoryDummyContext StoryDummyContext => _storyDummyContext ?? (_storyDummyContext = new StoryDummyContext());
+        public StoryContext StoryContext => _storyContext ?? (_storyContext = new StoryContext());
     }
 }

@@ -2,6 +2,7 @@
 {
     public interface IRespository
     {
-        StoryDummyContext StoryDummyContext { get; }
+        StoryContext StoryContext { get; }
+
     }
 }

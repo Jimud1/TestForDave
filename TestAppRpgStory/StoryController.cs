@@ -1,21 +1,20 @@
-﻿using System.Linq;
-using DataLayer;
+﻿using BusinessLogic.StoryService;
 using Models.RpgStoryStart;
 
 namespace TestAppRpgStory
 {
     public class StoryController
     {
-        private readonly StoryDummyContext _dummyContext;
+        private readonly IStoryService _storyService;
 
         public StoryController()
         {
-            _dummyContext = new StoryDummyContext();
+            _storyService = new StoryService();
         }
 
-        public Story GetStory(int id)
+        public StoryModel GetStory(int id)
         {
-            return _dummyContext.Stories(id).FirstOrDefault();
+            return _storyService.Get(id);
         }
     }
 }

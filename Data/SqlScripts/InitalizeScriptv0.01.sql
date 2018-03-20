@@ -106,12 +106,20 @@ ALTER DATABASE [TestStories] SET  READ_WRITE
 GO
 
 --Creation script for Testing
+DROP TABLE ConversationOption
+
+DROP TABLE [Conversation]
+
+DROP TABLE Story
+
+
+
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_SCHEMA = 'TestStories' 
-                 AND  TABLE_NAME = 'Stories'))
+                 AND  TABLE_NAME = 'Story'))
 BEGIN
-	CREATE TABLE Stories
+	CREATE TABLE [Story]
 	(
 		 StoryId INT IDENTITY(1,1)
 		,StoryTitle VARCHAR(50) NULL
@@ -119,71 +127,78 @@ BEGIN
 	);
 
 	INSERT INTO 
-		Stories (StoryTitle)
+		[Story] (StoryTitle)
 	VALUES
 		('Test Story')
+
+	INSERT INTO 
+		[Story] (StoryTitle)
+	VALUES
+		('is it going to work though?')
 END
 
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_SCHEMA = 'TestStories' 
-                 AND  TABLE_NAME = 'Conversations'))
+                 AND  TABLE_NAME = 'Conversation'))
 BEGIN
-	CREATE TABLE Conversations
+	CREATE TABLE [Conversation]
 	(
 		 ConversationId INT IDENTITY(1,1)
 		,ConversationText NVARCHAR(MAX)
 		,StoryId INT
+		,LeadToStoryId INT NULL
 		,PRIMARY KEY (ConversationId)
-		,FOREIGN KEY (StoryId) REFERENCES Stories(StoryId)
+		,FOREIGN KEY (StoryId) REFERENCES Story(StoryId)
 	);
 	INSERT INTO
-		Conversations (StoryId, ConversationText)
+		[Conversation] (StoryId, ConversationText)
 	VALUES 
 		(1, 'Hey there, you look a little lost...')
 	INSERT INTO
-		Conversations (StoryId, ConversationText)
+		[Conversation] (StoryId, ConversationText, LeadToStoryId)
 	VALUES 
-		(1, 'To be honest with you I dont know half the time,Would you like to find the key to the secret?')
+		(1, 'To be honest with you I dont know half the time,Would you like to find the key to the secret?', 2)
+
 
 END
 IF (NOT EXISTS (SELECT * 
                  FROM INFORMATION_SCHEMA.TABLES 
                  WHERE TABLE_SCHEMA = 'TestStories' 
-                 AND  TABLE_NAME = 'ConversationOptions'))
+                 AND  TABLE_NAME = 'ConversationOption'))
 BEGIN
-	CREATE TABLE ConversationOptions
+	CREATE TABLE [ConversationOption]
 	(
 		 ConversationOptionId INT IDENTITY(1,1)
 		,ConversationId INT 
 		,ConversationOptionText NVARCHAR(MAX)
-		,FOREIGN KEY(ConversationId) REFERENCES Conversations(ConversationId)
+		,FOREIGN KEY(ConversationId) REFERENCES [Conversation](ConversationId)
 		,PRIMARY KEY(ConversationOptionId)
 	);
 
 	INSERT INTO 
-		ConversationOptions (ConversationId, ConversationOptionText)
+		[ConversationOption] (ConversationId, ConversationOptionText)
 	VALUES 
 		(1, 'Who are you?')
 	INSERT INTO 
-		ConversationOptions (ConversationId, ConversationOptionText)
+		[ConversationOption] (ConversationId, ConversationOptionText)
 	VALUES 
 		(1, 'Where am I?')
 	INSERT INTO 
-		ConversationOptions (ConversationId, ConversationOptionText)
+		[ConversationOption] (ConversationId, ConversationOptionText)
 	VALUES 
 		(1, 'You look lost!')
 
 	INSERT INTO 
-		ConversationOptions (ConversationId, ConversationOptionText)
+		[ConversationOption] (ConversationId, ConversationOptionText)
 	VALUES 
 		(2, 'What secret, what are you talking about?')
 	INSERT INTO 
-		ConversationOptions (ConversationId, ConversationOptionText)
+		[ConversationOption] (ConversationId, ConversationOptionText)
 	VALUES 
 		(2, 'Yes tell me how to find the key')
 	INSERT INTO 
-		ConversationOptions (ConversationId, ConversationOptionText)
+		[ConversationOption] (ConversationId, ConversationOptionText)
 	VALUES 
 		(2, 'I have no idea what you''re talking about')
 END

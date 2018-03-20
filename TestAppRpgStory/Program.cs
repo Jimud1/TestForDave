@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Xml;
 using Models.RpgStoryStart;
 
 namespace TestAppRpgStory
@@ -8,7 +7,7 @@ namespace TestAppRpgStory
     internal class Program
     {
         private static readonly StoryController StoryController;
-        private static Story _currentStory;
+        private static StoryModel _currentStory;
         private const string NewLine = "\n\r";
 
         static Program()
@@ -20,11 +19,15 @@ namespace TestAppRpgStory
         /// 
         /// </summary>
         /// <param name="args"></param>
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             GetStory(1);
         }
 
+        /// <summary>
+        /// Get story from Id and display it to the console
+        /// </summary>
+        /// <param name="id"></param>
         private static void GetStory(int id)
         {
             _currentStory = StoryController.GetStory(id);
@@ -55,20 +58,21 @@ namespace TestAppRpgStory
 
             int.TryParse(Console.ReadLine(), out var nextConversation);
             var leadingConversation = GetConversation(nextConversation);
-            DisplayConversation(leadingConversation, conversation?.LeadingToStory);
+
+            DisplayConversation(leadingConversation, conversation.StoryLeadId.HasValue);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="story"></param>
-        private static void DisplayStory(Story story)
+        private static void DisplayStory(StoryModel story)
         {
             //Id is currently not in use as dummy context but you get the jist
             //This function should change depending on your view
             WriteToConsole(story.Title);
             var conversation = story.Conversations.FirstOrDefault();
-            DisplayConversation(conversation, conversation?.LeadingToStory);
+            DisplayConversation(conversation, conversation?.StoryLeadId.HasValue);
         }
 
         /// <summary>

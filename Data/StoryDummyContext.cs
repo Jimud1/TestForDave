@@ -9,11 +9,11 @@ namespace DataLayer
         /// Dummy data for mock up of RPG stoiry system
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Story> Stories(int id)
+        public IEnumerable<StoryModel> Stories(int id)
         {
             //Id is currently not used
 
-            var stories = new List<Story>();
+            var stories = new List<StoryModel>();
             const int toProduce = 1;
 
             for (var i = 0; i < toProduce; i++)
@@ -29,17 +29,14 @@ namespace DataLayer
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private Story CreateStory(int id)
+        private StoryModel CreateStory(int id)
         {
-            var story = new Story
+            var story = new StoryModel
             {
-                Id = id,
+                StoryId = id,
                 Title = $"Story title {id}",
             };
 
-            int[] leads = {1,2,3};
-
-            story.StoryLeads.AddRange(leads);
 
             const int conversationToDo = 3;
 
@@ -49,7 +46,6 @@ namespace DataLayer
                     story.Conversations.Add(CreateConversation(i));
                 else
                 {
-                    story.Conversations[i - 1].LeadingToStory = true;
                     story.Conversations[i - 1].StoryLeadId = i;
                 }
             }
