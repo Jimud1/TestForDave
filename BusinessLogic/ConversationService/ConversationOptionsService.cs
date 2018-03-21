@@ -1,4 +1,6 @@
-﻿using DataLayer;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DataLayer;
 
 namespace BusinessLogic.ConversationService
 {
@@ -31,9 +33,23 @@ namespace BusinessLogic.ConversationService
             throw new System.NotImplementedException();
         }
 
+        public IEnumerable<string> GetByConversationId(int conversationId)
+        {
+            var conversationOptions = _respository.StoryContext.ConversationOption.Where(x => x.ConversationId == conversationId);
+            var stringOptions = new List<string>();
+
+            foreach (var option in conversationOptions)
+            {
+                stringOptions.Add(option.ConversationOptionText);
+            }
+
+            return stringOptions;
+        }
+
         public ConversationOptionEntity Get(int id)
         {
             throw new System.NotImplementedException();
         }
+
     }
 }

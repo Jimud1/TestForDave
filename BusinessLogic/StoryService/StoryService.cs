@@ -1,16 +1,21 @@
-﻿using System;
+﻿using BusinessLogic.ConversationService;
 using DataLayer;
 using Models.RpgStoryStart;
+using System;
+using System.Linq;
+
 
 namespace BusinessLogic.StoryService
 {
     public class StoryService : IStoryService
     {
         private readonly IRespository _respository;
+        private readonly IConversationService _conversationService;
 
         public StoryService()
         {
             _respository = new Repository();
+            _conversationService = new ConversationService.ConversationService();
         }
 
         #region Basic CRUD - Not needed atm
@@ -49,9 +54,10 @@ namespace BusinessLogic.StoryService
             /*This is the main function I will care about at the moment, that will deliver the given story depending on */
             try
             {
-                var story = _respository.StoryContext.Story.Find(id);
+                var story = EntityToModel(_respository.StoryContext.Story.Find(id));
 
-                return EntityToModel(story);
+
+                return story;
             }
             catch (Exception ex)
             {
@@ -64,7 +70,8 @@ namespace BusinessLogic.StoryService
             var model = new StoryModel
             {
                 StoryId = entity.StoryId,
-                Title = entity.StoryTitle
+                Title = entity.StoryTitle,
+                Conversations = _conversationService.GetConversationByStoryId(entity.StoryId).ToList()
             };
             return model;
         }
