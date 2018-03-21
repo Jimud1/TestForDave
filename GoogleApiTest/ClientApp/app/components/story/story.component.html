@@ -1,0 +1,15 @@
+﻿<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">{{story.Title}}</th>
+                <th scope="col">{{story.conversations[0].conversationText}}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat = "conversation in story.conversations[0].conversationOptions">
+            <td>{{conversation}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -54,10 +54,12 @@ namespace BusinessLogic.StoryService
             /*This is the main function I will care about at the moment, that will deliver the given story depending on */
             try
             {
-                var story = EntityToModel(_respository.StoryContext.Story.Find(id));
+                var storyEntity = _respository.StoryContext.Story.Find(id);
 
+                if(storyEntity == null) throw new NullReferenceException($"Story with Id: {id} does not exist");
 
-                return story;
+                var storyModel = EntityToModel(storyEntity);
+                return storyModel;
             }
             catch (Exception ex)
             {
