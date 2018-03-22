@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Settings;
+using Settings.RpgStory;
 
 namespace DataLayer
 {
@@ -14,7 +14,7 @@ namespace DataLayer
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(RpgStoryConfig.LocalConnectionString);
+            optionsBuilder.UseSqlServer(Config.LocalConnectionString);
         }
     }
 }

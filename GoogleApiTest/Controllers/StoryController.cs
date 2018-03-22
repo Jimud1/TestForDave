@@ -10,6 +10,7 @@ namespace GoogleApiTest.Controllers
     public class StoryController : Controller
     {
         private readonly IStoryService _storyService;
+        private StoryModel _currentStory;
         public StoryController()
         {
             _storyService = new StoryService();
@@ -25,9 +26,16 @@ namespace GoogleApiTest.Controllers
         [HttpGet("{id}", Name = "Get")]
         public StoryModel Get(int id)
         {
-            return _storyService.Get(id);
+            _currentStory = _storyService.Get(id);
+            return _currentStory;
         }
-        
+
+        [HttpGet("Conversation/{id}", Name = "Get")]
+        public ConversationModel GetConversation(int id)
+        {
+            return _currentStory.Conversations[id];
+        }
+
         // POST: api/Story
         [HttpPost]
         public void Post([FromBody]string value)

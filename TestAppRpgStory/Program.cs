@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using BusinessLogic.MapsService;
 using Models.RpgStoryStart;
 
 namespace TestAppRpgStory
@@ -7,12 +8,14 @@ namespace TestAppRpgStory
     internal class Program
     {
         private static readonly StoryController StoryController;
+        private static readonly GoogleMapsService GMapsService;
         private static StoryModel _currentStory;
         private const string NewLine = "\n\r";
 
         static Program()
         {
             StoryController = new StoryController();
+            GMapsService = new GoogleMapsService();
         }
 
         /// <summary>
@@ -21,7 +24,10 @@ namespace TestAppRpgStory
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
-            GetStory(1);
+            //GetStory(1);
+            //Use this to test GMaps
+            var myLoc = GMapsService.GetLocationFromAddress("8 Rowan Avenue, Whaley Range, Manchester, M16 8AP").ToString();
+
         }
 
         /// <summary>
