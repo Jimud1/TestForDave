@@ -1,6 +1,7 @@
 USE [master]
 GO
---NOTE Change the Filename depending on your PC / preferences 
+--NOTE Change the Filename depending on your PC / preferences
+--After some thought I believe it would be best to get this data from JSON so we aren't dependent on the user being online
 CREATE DATABASE [TestStories]
  CONTAINMENT = NONE
  ON  PRIMARY 

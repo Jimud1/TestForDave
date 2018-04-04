@@ -1,0 +1,26 @@
+﻿{
+  "definitions": {
+    "conversation": {
+      "description": "Conversation object",
+      "type": "object",
+      "properties": {
+        "story_lead_id": { "type": [ "number", "null" ] },
+        "conversation_id": {
+          "type": "number",
+          "description": "Conversation unique Identifier"
+        },
+        "conversation": {
+          "type": "string",
+          "description": "Text to display from conversation"
+        },
+        "conversationOptions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Conversation options to display"
+          }
+        }
+      }
+    }
+  }
+}

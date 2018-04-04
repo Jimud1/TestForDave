@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAppRpgStory", "TestAppR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Utilities.csproj", "{939F7E38-B36D-45CE-AFC5-2AFE1FE85D26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings", "Settings\Settings.csproj", "{56FEC57D-BC20-4FBE-83D3-4622F3B7915A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Settings", "Settings\Settings.csproj", "{56FEC57D-BC20-4FBE-83D3-4622F3B7915A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{B8590148-6F8A-48AE-8769-35DA65FC0D6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{56FEC57D-BC20-4FBE-83D3-4622F3B7915A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56FEC57D-BC20-4FBE-83D3-4622F3B7915A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56FEC57D-BC20-4FBE-83D3-4622F3B7915A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8590148-6F8A-48AE-8769-35DA65FC0D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8590148-6F8A-48AE-8769-35DA65FC0D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8590148-6F8A-48AE-8769-35DA65FC0D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8590148-6F8A-48AE-8769-35DA65FC0D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
