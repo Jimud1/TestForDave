@@ -1,25 +1,25 @@
 ﻿{
   "definitions": {
-    "conversation": {
+    "conversations": {
       "description": "Conversation object",
       "type": "object",
       "properties": {
-        "story_lead_id": { "type": [ "number", "null" ] },
         "conversation_id": {
           "type": "number",
           "description": "Conversation unique Identifier"
         },
-        "conversation": {
+        "conversation_text": {
           "type": "string",
           "description": "Text to display from conversation"
         },
-        "conversationOptions": {
+        "conversation_options": {
           "type": "array",
           "items": {
             "type": "string",
             "description": "Conversation options to display"
           }
-        }
+        },
+        "story_lead_id": { "type": [ "number", "null" ] }
       }
     }
   },
@@ -34,7 +34,7 @@
         "description": "Conversation object",
         "type": "object",
         "properties": {
-          "conversation": { "$ref": "#/definitions/conversation" }
+          "conversations": { "$ref": "#/definitions/conversations" }
         }
       }
     }

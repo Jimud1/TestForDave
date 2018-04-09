@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Models.RpgStoryStart
 {
@@ -7,8 +8,12 @@ namespace Models.RpgStoryStart
     /// </summary>
     public class StoryModel : IModel
     {
+        [JsonProperty("story_id")]
         public int StoryId { get; set; }
+
+        [JsonProperty("title")]
         public string Title { get; set; }
-        public List<ConversationModel> Conversations { get; set; } = new List<ConversationModel>();
+
+        public IList<ConversationModel> Conversations { get; set; } = new List<ConversationModel>();
     }
 }

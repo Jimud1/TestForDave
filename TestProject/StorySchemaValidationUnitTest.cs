@@ -1,39 +1,59 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xunit;
+using Utilities;
+using Models.RpgStoryStart;
 
 namespace TestProject
 {
     public class StorySchemaValidationUnitTest
     {
-        [Fact]
-        public void CheckShemaWorks()
+        JSchema GetSchema()
         {
             JSchema schema;
             using (StreamReader file = File.OpenText(@"E:\Development\GoogleApiTest\TestAppRpgStory\StorySchema.json"))
             using (JsonTextReader reader = new JsonTextReader(file))
             {
-               schema = JSchema.Load(reader);
-                // validate JSON
-                Assert.NotNull(schema);
+                schema = JSchema.Load(reader);
             }
+            return schema;
         }
-        [Fact]
-        public void CheckStoryAgainstSchema()
-        {
-            JObject story = JObject.Parse(@"
-            {
-	            'story_id' : 1,
-	            'title': 'Test Story',
-	            'conversations':[{
-		            'conversation_id': 1,
-		            'conversation': 'Hello there this is a test',
-		            'conversation_options' ['One', 'Two', 'Thee']
-	            }]
-            }");
 
+        JObject GetObject()
+        {
+            JObject json;
+            using (StreamReader file = File.OpenText(@"E:\Development\GoogleApiTest\TestAppRpgStory\Story.json"))
+            using (JsonTextReader reader = new JsonTextReader(file))
+            {
+                json = JObject.Load(reader);
+            }
+            return json;
+        }
+
+        [Fact]
+        public void CheckShemaWorks()
+        {
+            JSchema schema = GetSchema();
+            JObject story = GetObject();
+            var valid = story.IsValid(schema, out IList<string> messages);
+            var noErrors = !messages.Any();
+            Assert.True(noErrors);
+        }
+
+        [Fact]
+        public void JsonModelHelperTest()
+        {
+            //Arrange
+            var json = File.ReadAllText(@"E:\Development\GoogleApiTest\TestAppRpgStory\Story.json");
+            //Act
+            var model = JsonModelHelper.JsonToModel<StoryModel>(json);
+            //Assert
+            Assert.NotNull(model);
         }
     }
 }
+
