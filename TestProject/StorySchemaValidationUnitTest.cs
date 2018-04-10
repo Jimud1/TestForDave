@@ -12,10 +12,10 @@ namespace TestProject
 {
     public class StorySchemaValidationUnitTest
     {
-        JSchema GetSchema()
+        JSchema GetSchema(string filePath = @"E:\Development\GoogleApiTest\TestAppRpgStory\StorySchema.json")
         {
             JSchema schema;
-            using (StreamReader file = File.OpenText(@"E:\Development\GoogleApiTest\TestAppRpgStory\StorySchema.json"))
+            using (StreamReader file = File.OpenText(filePath))
             using (JsonTextReader reader = new JsonTextReader(file))
             {
                 schema = JSchema.Load(reader);
@@ -23,10 +23,10 @@ namespace TestProject
             return schema;
         }
 
-        JObject GetObject()
+        JObject GetObject(string filePath = @"E:\Development\GoogleApiTest\TestAppRpgStory\Story.json")
         {
             JObject json;
-            using (StreamReader file = File.OpenText(@"E:\Development\GoogleApiTest\TestAppRpgStory\Story.json"))
+            using (StreamReader file = File.OpenText(filePath))
             using (JsonTextReader reader = new JsonTextReader(file))
             {
                 json = JObject.Load(reader);

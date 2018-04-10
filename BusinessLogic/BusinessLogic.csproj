@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data\DataLayer.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>

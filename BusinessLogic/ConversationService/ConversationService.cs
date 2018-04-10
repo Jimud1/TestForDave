@@ -9,12 +9,10 @@ namespace BusinessLogic.ConversationService
     public class ConversationService : IConversationService
     {
         private readonly IRespository _respository;
-        private readonly IConversationOptionsService _conversationOptionsService;
 
         public ConversationService()
         {
             _respository = new Repository();
-            _conversationOptionsService = new ConversationOptionsService();
         }
 
         public ConversationModel Add(ConversationModel model)
@@ -60,8 +58,7 @@ namespace BusinessLogic.ConversationService
             var model = new ConversationModel
             {
                 ConversationId = entity.ConversationId,
-                Conversation = entity.ConversationText,
-                ConversationOptions = _conversationOptionsService.GetByConversationId(entity.ConversationId).ToList()
+                Conversation = entity.ConversationText
             };
 
             if (entity.LeadToStoryId != null)

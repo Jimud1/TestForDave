@@ -2,5 +2,8 @@
 
 namespace BusinessLogic.StoryService
 {
-    public interface IStoryService : IService<StoryModel> {}
+    public interface IStoryService : IService<StoryModel>
+    {
+        StoryModel Get(string filePath);
+    }
 }

@@ -3,19 +3,17 @@ using DataLayer;
 using Models.RpgStoryStart;
 using System;
 using System.Linq;
-
+using Utilities;
 
 namespace BusinessLogic.StoryService
 {
     public class StoryService : IStoryService
     {
         private readonly IRespository _respository;
-        private readonly IConversationService _conversationService;
 
         public StoryService()
         {
             _respository = new Repository();
-            _conversationService = new ConversationService.ConversationService();
         }
 
         #region Basic CRUD - Not needed atm
@@ -48,6 +46,21 @@ namespace BusinessLogic.StoryService
             throw new NotImplementedException();
         }
 
+        public StoryModel Get(string filePath)
+        {
+            try
+            {
+                var json = _respository.JsonDataContext.GetJsonFromFile(filePath);
+                var model = JsonModelHelper.JsonToModel<StoryModel>(json);
+                return model;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"An error occured getting {filePath}", ex);
+            }
+
+        }
+
 
         public StoryModel Get(int id)
         {
@@ -72,8 +85,7 @@ namespace BusinessLogic.StoryService
             var model = new StoryModel
             {
                 StoryId = entity.StoryId,
-                Title = entity.StoryTitle,
-                Conversations = _conversationService.GetConversationByStoryId(entity.StoryId).ToList()
+                Title = entity.StoryTitle
             };
             return model;
         }

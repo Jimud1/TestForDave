@@ -4,5 +4,6 @@
     {
         StoryContext StoryContext { get; }
 
+        JsonDataContext JsonDataContext { get; }
     }
 }

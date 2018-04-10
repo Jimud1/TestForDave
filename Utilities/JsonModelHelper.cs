@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace Utilities
 {
@@ -12,13 +13,23 @@ namespace Utilities
         /// <returns></returns>
         public static T JsonToModel<T>(string json)
         {
+            T model;
             //Ignore null values
             var settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             };
 
-            return JsonConvert.DeserializeObject<T>(json, settings);
+            try
+            {
+                model = JsonConvert.DeserializeObject<T>(json, settings);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"An error occured trying to convert {json} into {typeof(T)}", ex);
+            }
+
+            return model;
         }
     }
 }
